@@ -1,0 +1,97 @@
+<div class="invoice-container">
+  <h2 class="invoice-header">Create Invoice</h2>
+  <div class="invoice-section">
+    <label for="invoiceDate">Invoice Date:</label>
+    <input type="date" id="invoiceDate" [(ngModel)]="invoiceDate" class="form-control" />
+    <label for="invoiceTime">Invoice Time:</label>
+    <input type="time" id="invoiceTime" [(ngModel)]="invoiceTime" class="form-control" />
+    <div class="invoice-section">
+      <label for="invoiceNumber">Invoice Number:</label>
+      <input
+        type="text"
+        id="invoiceNumber"
+        [(ngModel)]="invoiceNumber"
+        class="form-control"
+        readonly
+      />
+    </div>
+    <label for="customerSelect">Select Customer:</label>
+    <select id="customerSelect" [(ngModel)]="selectedCustomer" class="invoice-select">
+      <option *ngFor="let customer of customers" [value]="customer.id">{{ customer.name }}</option>
+    </select>
+  </div>
+  <div class="invoice-section">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Select Item</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th>Tax%</th>
+            <th>Total Tax</th>
+            <th>Net Payable</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+
+
+
+
+
+
+          <tr *ngFor="let item of invoiceRows; let i = index">
+            <!-- <td>
+              <select [(ngModel)]="item.selectedItemId" class="form-control" (ngModelChange)="onItemChange(i)">
+                <option *ngFor="let optionItem of items" [value]="optionItem.id">
+                  {{ optionItem.prodName }}
+                </option>
+              </select>
+            </td> -->
+            <select (ngModel)="item.selectedItemId" class="form-control" (ngModelChange)="onItemChange(i)">
+              <option *ngFor="let optionItem of items" [value]="optionItem.id">
+                {{ optionItem.prodName }}
+              </option>
+            </select>
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="item.unit"
+                (ngModelChange)="calculateRowTotal(i)"
+                class="form-control"
+              />
+            </td>
+            <td>
+             
+              <input type="number" [(ngModel)]="item.unitPrice" (change)="onItemChange(i)" class="form-control" />
+
+            </td>
+            <td>{{ item.unit * item.unitPrice | number: '1.3-3' }}</td>
+            <td>
+              <input type="number" [(ngModel)]="item.tax" class="form-control" />
+            </td>
+            <td>{{ calculateTotalTax(item) | number: '1.3-3' }}</td>
+            <td>{{ calculateNetPayable(item) | number: '1.3-3' }}</td>
+            <td>
+              <button type="button" (click)="removeRow(i)" class="btn btn-danger">Remove</button>
+            </td>
+          </tr>
+          
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="invoice-buttons">
+    <button (click)="addRow()" class="btn btn-primary">Add Row</button>
+    <button (click)="saveInvoice()" class="btn btn-success">Save Invoice</button>
+  </div>
+</div>
+
+
+
+

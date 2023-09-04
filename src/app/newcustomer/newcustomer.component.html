@@ -1,0 +1,31 @@
+
+   <div class="container mt-5">
+    <h2>Add New Customer</h2>
+    <form (ngSubmit)="onSubmit()" #customerForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="customer.name" name="name" required>
+        <!-- Display validation error if the name field is invalid -->
+        <div *ngIf="customerForm.controls['name'].invalid && customerForm.controls['name'].touched" class="text-danger">
+          Name is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" [(ngModel)]="customer.email" name="email" required>
+        <!-- Display validation error if the email field is invalid -->
+        <div *ngIf="customerForm.controls['email'].invalid && customerForm.controls['email'].touched" class="text-danger">
+          Email is required and must be a valid email address.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" [(ngModel)]="customer.password" name="password" required>
+        <!-- Display validation error if the password field is invalid -->
+        <div *ngIf="customerForm.controls['password'].invalid && customerForm.controls['password'].touched" class="text-danger">
+          Password is required.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="customerForm.invalid">Add Customer</button>
+    </form>
+  </div>
